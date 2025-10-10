@@ -16,11 +16,21 @@ class Game
   void keyPressed(sf::Event event);
 
  private:
+
+
   sf::RenderWindow& window;
+  sf::Font font;
+
   sf::Sprite ball;
   sf::Texture ball_texture;
+  sf::Sprite* character;
+  sf::Sprite* passport;
   sf::Text title;
   sf::Text play_option;
+  sf::Text exit_option;
+
+  sf::Texture* animals = new sf::Texture[3];
+  sf::Texture* passports = new sf::Texture[3];
 
 };
 

@@ -15,18 +15,29 @@ Game::~Game()
 
 bool Game::init()
 {
+	if (!font.loadFromFile("../Data/Fonst/OpenSans-Bold.ttf"))
+	{
+		std::cout << "font did not load";
+	}
+	character = new sf::Sprite;
+	passport = new sf::Sprite;
+
+	
+
+
+
 
   return true;
 }
 
 void Game::update(float dt)
 {
-
+	
 }
 
 void Game::render()
 {
-	window.clear(sf::Color::Black);
+	
 }
 
 void Game::mouseClicked(sf::Event event)
