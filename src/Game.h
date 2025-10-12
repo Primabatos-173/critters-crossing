@@ -3,6 +3,7 @@
 #define PLATFORMER_GAME_H
 
 #include <SFML/Graphics.hpp>
+#include "GameObject.h"
 
 class Game
 {
@@ -23,14 +24,23 @@ class Game
 
   sf::Sprite ball;
   sf::Texture ball_texture;
-  sf::Sprite* character;
-  sf::Sprite* passport;
   sf::Text title;
   sf::Text play_option;
   sf::Text exit_option;
 
-  sf::Texture* animals = new sf::Texture[3];
-  sf::Texture* passports = new sf::Texture[3];
+  GameObject character;
+  GameObject animals[3];
+  sf::Texture character_texture;
+
+  GameObject passport;
+  GameObject passports[3];
+  sf::Texture passport_texture;
+  
+
+  
+  
+ 
+ 
 
 };
 

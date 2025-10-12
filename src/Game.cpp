@@ -10,7 +10,8 @@ Game::Game(sf::RenderWindow& game_window)
 
 Game::~Game()
 {
-
+	
+	
 }
 
 bool Game::init()
@@ -19,12 +20,46 @@ bool Game::init()
 	{
 		std::cout << "font did not load";
 	}
-	character = new sf::Sprite;
-	passport = new sf::Sprite;
 
-	
+	//initalising animal sprites
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == 0)
+		{
+			animals[i].initialiseSprite(character_texture, "../Data/Images/Critter Crossing Customs/gorilla.png");
+			std::cout << "animal 1 loaded\n";
+		}
+		if (i == 1)
+		{
+			animals[i].initialiseSprite(character_texture, "../Data/Images/Critter Crossing Customs/giraffe.png");
+			std::cout << "animal 2 loaded\n";
+		}
+		if (i == 2)
+		{
+			animals[i].initialiseSprite(character_texture, "../Data/Images/Critter Crossing Customs/elephant.png");
+			std::cout << "animal 3 loaded\n";
+		}
+		
+	}
 
-
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == 0)
+		{
+			passports[i].initialiseSprite(passport_texture, "../Data/Images/Critter Crossing Customs/default passport.png");
+			std::cout << "passport 1 loaded\n";
+		}
+		if (i == 1)
+		{
+			passports[i].initialiseSprite(passport_texture, "../Data/Images/Critter Crossing Customs/default passport.png");
+			std::cout << "passport 2 loaded\n";
+		}
+		if (i == 2)
+		{
+			passports[i].initialiseSprite(passport_texture, "../Data/Images/Critter Crossing Customs/default passport.png");
+			std::cout << "passport 3 loaded\n";
+		}
+	}
 
 
   return true;
