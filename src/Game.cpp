@@ -68,7 +68,11 @@ void Game::update(float dt)
 	{
 		newAnimal();
 	}
-	
+	if (dragged)
+	{
+		dragSprite(passport.getSprite());
+	}
+
 }
 
 void Game::render()
@@ -87,8 +91,19 @@ void Game::mouseClicked(sf::Event event)
 {
   //get the click position
   sf::Vector2i click = sf::Mouse::getPosition(window);
+  sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
+  if (passport.getSprite()->getGlobalBounds().contains(clickf))
+  {
+	  dragged = passport.getSprite();
+	  
+	  std::cout << "clicked\n"; 
+  }
+}
 
+void Game::mouseReleased(sf::Event event)
+{
+	dragged = nullptr;
 }
 
 void Game::keyPressed(sf::Event event)
@@ -140,8 +155,29 @@ bool Game::ui(sf::Vector2i click, sf::Text icon)
 	return false;
 }
 
-void Game::gamestate()
+void Game::dragSprite(sf::Sprite* sprite)
 {
+	if (sprite != nullptr)
+	{
+		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+		sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
+		sf::Vector2f drag_position = mouse_positionf;
+		sprite->setPosition(drag_position.x, drag_position.y);
+	}
 }
 
+bool Game::mouseDetection(sf::Vector2i click, sf::Sprite sprite)
+{
+	if (
+		//determines if the sprite has been clicked or not
+		click.x > sprite.getPosition().x &&
+		click.x < sprite.getPosition().x + sprite.getGlobalBounds().width &&
+		click.y > sprite.getPosition().y &&
+		click.y < sprite.getPosition().y + sprite.getGlobalBounds().height)
+	{
+		
+		return true;
+	}
+	return false;
+}

@@ -14,15 +14,17 @@ class Game
   void update(float dt);
   void render();
   void mouseClicked(sf::Event event);
+  void mouseReleased(sf::Event event);
   void keyPressed(sf::Event event);
-  void gamestate();
+  void dragSprite(sf::Sprite* sprite);
+  bool mouseDetection(sf::Vector2i click, sf::Sprite sprite);
 
  private:
   bool ui(sf::Vector2i click, sf::Text icon);
   void newAnimal();
   bool should_accept = false;
   bool change = true;
-  
+  sf::Sprite* dragged = nullptr;
 
   sf::RenderWindow& window;
   sf::Font font;
