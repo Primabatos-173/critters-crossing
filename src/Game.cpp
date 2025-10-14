@@ -44,21 +44,14 @@ bool Game::init()
 		std::cout << "passport 1 did not load\n";
 	}
 
-	if (!passports[0].loadFromFile("../Data/Images/Critter Crossing Customs/penguin passport.png"))
+	if (!passports[1].loadFromFile("../Data/Images/Critter Crossing Customs/penguin passport.png"))
 	{
 		std::cout << "passport 2 did not load\n";
 	}
-	if (!passports[0].loadFromFile("../Data/Images/Critter Crossing Customs/elephant passport.png"))
+	if (!passports[2].loadFromFile("../Data/Images/Critter Crossing Customs/elephant passport.png"))
 	{
 		std::cout << "passport 3 did not load\n";
 	}
-	
-		
-		
-			
-		
-	
-
 	
 	background.initialiseSprite(background_texture, "../Data/WhackaMole Worksheet/background.png");
 
@@ -71,7 +64,7 @@ bool Game::init()
 
 void Game::update(float dt)
 {
-	if (change == false)
+	if (change == true)
 	{
 		newAnimal();
 	}
@@ -128,7 +121,7 @@ void Game::newAnimal()
 	passport.getSprite()->setTexture(passports[passport_index], true);
 	passport.getSprite()->setScale(0.6, 0.6);
 	passport.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 3);
-
+	change = false;
 
 }
 
@@ -151,3 +144,4 @@ void Game::gamestate()
 {
 
 }
+

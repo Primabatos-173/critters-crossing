@@ -21,7 +21,7 @@ class Game
   bool ui(sf::Vector2i click, sf::Text icon);
   void newAnimal();
   bool should_accept = false;
-  bool change = false;
+  bool change = true;
   
 
   sf::RenderWindow& window;
