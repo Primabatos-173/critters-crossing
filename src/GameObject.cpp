@@ -24,3 +24,19 @@ bool GameObject::initialiseSprite(sf::Texture& texture, std::string filename)
     sprite->setTexture(texture);
     return true;
 }
+
+bool GameObject::intialiseRandSprite(sf::Texture& texture, std::string filename)
+{
+    if(!texture.loadFromFile(filename))
+    {
+        std::cout << "file did not load\n";
+        return false;
+    }
+    return true;
+}
+
+
+sf::Sprite* GameObject::getSprite()
+{
+    return sprite;
+}

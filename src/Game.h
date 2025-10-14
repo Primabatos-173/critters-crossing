@@ -15,9 +15,14 @@ class Game
   void render();
   void mouseClicked(sf::Event event);
   void keyPressed(sf::Event event);
+  void gamestate();
 
  private:
-
+  bool ui(sf::Vector2i click, sf::Text icon);
+  void newAnimal();
+  bool should_accept = false;
+  bool change = false;
+  
 
   sf::RenderWindow& window;
   sf::Font font;
@@ -29,14 +34,15 @@ class Game
   sf::Text exit_option;
 
   GameObject character;
-  GameObject animals[3];
-  sf::Texture character_texture;
-
-  GameObject passport;
-  GameObject passports[3];
-  sf::Texture passport_texture;
+  sf::Texture* animals = new sf::Texture[3];
   
 
+  GameObject passport;
+  sf::Texture* passports = new sf::Texture[3];
+  sf::Texture passport_texture;
+  
+  GameObject background;
+  sf::Texture background_texture;
   
   
  
