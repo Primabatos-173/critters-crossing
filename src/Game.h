@@ -46,7 +46,11 @@ class Game
   GameObject background;
   sf::Texture background_texture;
   
-  
+  GameObject acceptbutton;
+  sf::Texture acceptbutton_texture;
+
+  GameObject rejectbutton;
+  sf::Texture rejectbutton_texture;
  
  
 

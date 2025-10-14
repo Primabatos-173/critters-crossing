@@ -55,8 +55,13 @@ bool Game::init()
 	
 	background.initialiseSprite(background_texture, "../Data/WhackaMole Worksheet/background.png");
 
+	acceptbutton.initialiseSprite(acceptbutton_texture, "../Data/Images/Critter Crossing Customs/accept button.png");
+	acceptbutton.getSprite()->setScale(0.8, 0.8);
+	acceptbutton.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 4.8);
 
-	
+	rejectbutton.initialiseSprite(rejectbutton_texture, "../Data/Images/Critter Crossing Customs/reject button.png");
+	rejectbutton.getSprite()->setScale(0.8, 0.8);
+	rejectbutton.getSprite()->setPosition(window.getSize().x / 1.3, window.getSize().y / 4.8);
 
 
   return true;
@@ -80,8 +85,8 @@ void Game::render()
 	window.draw(*background.getSprite());
     window.draw(*character.getSprite());
 	window.draw(*passport.getSprite());
-	
-
+	window.draw(*acceptbutton.getSprite());
+	window.draw(*rejectbutton.getSprite());
 
 
 
@@ -130,7 +135,7 @@ void Game::newAnimal()
 		should_accept = false;
 	}
 	character.getSprite()->setTexture(animals[animal_index], true);
-	character.getSprite()->setScale(1.8, 1.8);
+	character.getSprite()->setScale(1, 1);
 	character.getSprite()->setPosition(window.getSize().x /12, window.getSize().y / 12);
 	
 	passport.getSprite()->setTexture(passports[passport_index], true);
