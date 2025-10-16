@@ -33,6 +33,8 @@ class Game
   bool reject_stamped = false;
   bool in_game = true;
 
+  int correct_score = 0;
+  int wrong_score = 0;
 
   sf::Sprite* dragged = nullptr;
 

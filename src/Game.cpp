@@ -17,7 +17,7 @@ Game::~Game()
 
 bool Game::init()
 {
-	if (!font.loadFromFile("../Data/Fonst/OpenSans-Bold.ttf"))
+	if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
 	{
 		std::cout << "font did not load\n";
 	}
@@ -74,6 +74,30 @@ bool Game::init()
 	drop_box.setFillColor(sf::Color::Blue);
 	drop_box.setPosition(70, 270);
 
+	correct.setString("correct:");
+	correct.setFont(font);
+	correct.setCharacterSize(30);
+	correct.setFillColor(sf::Color::Black);
+	correct.setPosition(600, 40);
+
+	correct_num.setString("0");
+	correct_num.setFont(font);
+	correct_num.setCharacterSize(30);
+	correct_num.setFillColor(sf::Color::Black);
+	correct_num.setPosition(730, 40);
+
+	wrong.setString("wrong:");
+	wrong.setFont(font);
+	wrong.setCharacterSize(30);
+	wrong.setFillColor(sf::Color::Black);
+	wrong.setPosition(800, 40);
+
+	wrong_num.setString("0");
+	wrong_num.setFont(font);
+	wrong_num.setCharacterSize(30);
+	wrong_num.setFillColor(sf::Color::Black);
+	wrong_num.setPosition(930, 40);
+
 
   return true;
 }
@@ -101,12 +125,13 @@ void Game::update(float dt)
 			reject.getSprite()->setPosition(passport.getSprite()->getPosition().x, passport.getSprite()->getPosition().y);
 		}
 
-		
-
 		if (change == true)
 		{
 			newAnimal();
 		}
+		correct_num.setString(std::to_string(correct_score));
+		wrong_num.setString(std::to_string(wrong_score));
+		
 	}
 
 }
@@ -132,8 +157,10 @@ void Game::render()
 		window.draw(*character.getSprite());
 		window.draw(*acceptbutton.getSprite());
 		window.draw(*rejectbutton.getSprite());
-		
-
+		window.draw(correct);
+		window.draw(correct_num);
+		window.draw(wrong);
+		window.draw(wrong_num);
 
 	}
 
@@ -149,7 +176,7 @@ void Game::mouseClicked(sf::Event event)
 	{
 		dragged = passport.getSprite();
 
-		std::cout << "clicked\n";
+		//std::cout << "clicked\n";
 	}
 
 	if (mouseDetection(click, *acceptbutton.getSprite()))
@@ -164,6 +191,7 @@ void Game::mouseClicked(sf::Event event)
 		accept_stamped = false;
 	}
 	
+	
 
 }
 
@@ -172,20 +200,29 @@ void Game::mouseReleased(sf::Event event)
 	dragged = nullptr;
 	if (dropbox_collision() && (accept_stamped || reject_stamped))
 	{
-		std::cout << "drop";
-		if (should_accept)
-		{
-			change = true;
-			accept_stamped = false;
-			reject_stamped = false;
-		}
-		if (!should_accept)
-		{
-			change = true;
-			accept_stamped = false;
-			reject_stamped = false;
-		}
+		
+		change = true;
+		
 
+		if (should_accept && accept_stamped)
+		{
+			correct_score = correct_score + 1;
+		}
+		if (should_accept == false && reject_stamped)
+		{
+			correct_score = correct_score + 1;
+		}
+		if (should_accept && reject_stamped)
+		{
+			wrong_score = wrong_score + 1;
+		}
+		if (should_accept == false && accept_stamped)
+		{
+			wrong_score = wrong_score + 1;
+		}
+		accept_stamped = false;
+		reject_stamped = false;
+		std::cout << correct_score << "\n";
 	}
 }
 
@@ -202,7 +239,7 @@ void Game::newAnimal()
 
 	int animal_index = rand() % 3;
 	int passport_index = rand() % 3;
-	std::cout << animal_index;
+	
 
 	if (passport_index == animal_index)
 	{
@@ -220,7 +257,7 @@ void Game::newAnimal()
 	passport.getSprite()->setScale(0.6, 0.6);
 	passport.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 3);
 	change = false;
-
+	
 }
 
 
