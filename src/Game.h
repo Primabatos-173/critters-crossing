@@ -18,22 +18,37 @@ class Game
   void keyPressed(sf::Event event);
   void dragSprite(sf::Sprite* sprite);
   bool mouseDetection(sf::Vector2i click, sf::Sprite sprite);
+  
+
 
  private:
   bool ui(sf::Vector2i click, sf::Text icon);
+  bool dropbox_collision();
   void newAnimal();
+  
+  
   bool should_accept = false;
   bool change = true;
+  bool accept_stamped = false;
+  bool reject_stamped = false;
+  bool in_game = true;
+
+
   sf::Sprite* dragged = nullptr;
 
   sf::RenderWindow& window;
   sf::Font font;
 
+  sf::RectangleShape drop_box;
   sf::Sprite ball;
   sf::Texture ball_texture;
   sf::Text title;
   sf::Text play_option;
   sf::Text exit_option;
+  sf::Text correct;
+  sf::Text correct_num;
+  sf::Text wrong;
+  sf::Text wrong_num;
 
   GameObject character;
   sf::Texture* animals = new sf::Texture[3];
@@ -52,7 +67,11 @@ class Game
   GameObject rejectbutton;
   sf::Texture rejectbutton_texture;
  
- 
+  GameObject accept;
+  sf::Texture accept_texture;
+
+  GameObject reject;
+  sf::Texture reject_texture;
 
 };
 

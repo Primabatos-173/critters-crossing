@@ -63,52 +63,130 @@ bool Game::init()
 	rejectbutton.getSprite()->setScale(0.8, 0.8);
 	rejectbutton.getSprite()->setPosition(window.getSize().x / 1.3, window.getSize().y / 4.8);
 
+	accept.initialiseSprite(accept_texture, "../Data/Images/Critter Crossing Customs/accept.png");
+	accept.getSprite()->setScale(0.8, 0.8);
+
+	reject.initialiseSprite(reject_texture, "../Data/Images/Critter Crossing Customs/reject.png");
+	reject.getSprite()->setScale(0.8, 0.8);
+
+	//initalising drop box
+	drop_box.setSize(sf::Vector2f(450, 500));
+	drop_box.setFillColor(sf::Color::Blue);
+	drop_box.setPosition(70, 270);
+
 
   return true;
 }
 
 void Game::update(float dt)
 {
-	if (change == true)
+	if (in_game) 
 	{
-		newAnimal();
-	}
-	if (dragged)
-	{
-		dragSprite(passport.getSprite());
+		if (change == true)
+		{
+			newAnimal();
+		}
+		if (dragged)
+		{
+			dragSprite(passport.getSprite());
+		}
+
+		if (accept_stamped)
+		{
+			accept.getSprite()->setPosition(passport.getSprite()->getPosition().x, passport.getSprite()->getPosition().y);
+		}
+
+		if (reject_stamped)
+		{
+			reject.getSprite()->setPosition(passport.getSprite()->getPosition().x, passport.getSprite()->getPosition().y);
+		}
+
+		
+
+		if (change == true)
+		{
+			newAnimal();
+		}
 	}
 
 }
 
 void Game::render()
 {
-	window.draw(*background.getSprite());
-    window.draw(*character.getSprite());
-	window.draw(*passport.getSprite());
-	window.draw(*acceptbutton.getSprite());
-	window.draw(*rejectbutton.getSprite());
+	if (in_game) 
+	{
+		window.draw(*background.getSprite());
+		window.draw(drop_box);
+		window.draw(*passport.getSprite());
+		
+		if (accept_stamped)
+		{
+			window.draw(*accept.getSprite());
+		}
+		
+		if (reject_stamped)
+		{
+			window.draw(*reject.getSprite());
+		}
+		
+		window.draw(*character.getSprite());
+		window.draw(*acceptbutton.getSprite());
+		window.draw(*rejectbutton.getSprite());
+		
 
 
+	}
 
 }
 
 void Game::mouseClicked(sf::Event event)
 {
-  //get the click position
-  sf::Vector2i click = sf::Mouse::getPosition(window);
-  sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
+	//get the click position
+	sf::Vector2i click = sf::Mouse::getPosition(window);
+	sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
-  if (passport.getSprite()->getGlobalBounds().contains(clickf))
-  {
-	  dragged = passport.getSprite();
-	  
-	  std::cout << "clicked\n"; 
-  }
+	if (passport.getSprite()->getGlobalBounds().contains(clickf))
+	{
+		dragged = passport.getSprite();
+
+		std::cout << "clicked\n";
+	}
+
+	if (mouseDetection(click, *acceptbutton.getSprite()))
+	{
+		accept_stamped = true;
+		reject_stamped = false;
+	}
+
+	if (mouseDetection(click, *rejectbutton.getSprite()))
+	{
+		reject_stamped = true;
+		accept_stamped = false;
+	}
+	
+
 }
 
 void Game::mouseReleased(sf::Event event)
 {
 	dragged = nullptr;
+	if (dropbox_collision() && (accept_stamped || reject_stamped))
+	{
+		std::cout << "drop";
+		if (should_accept)
+		{
+			change = true;
+			accept_stamped = false;
+			reject_stamped = false;
+		}
+		if (!should_accept)
+		{
+			change = true;
+			accept_stamped = false;
+			reject_stamped = false;
+		}
+
+	}
 }
 
 void Game::keyPressed(sf::Event event)
@@ -121,7 +199,7 @@ void Game::newAnimal()
 	bool passport_accept = false;
 	bool passport_rejected = false;
 
-	
+
 	int animal_index = rand() % 3;
 	int passport_index = rand() % 3;
 	std::cout << animal_index;
@@ -136,8 +214,8 @@ void Game::newAnimal()
 	}
 	character.getSprite()->setTexture(animals[animal_index], true);
 	character.getSprite()->setScale(1, 1);
-	character.getSprite()->setPosition(window.getSize().x /12, window.getSize().y / 12);
-	
+	character.getSprite()->setPosition(window.getSize().x / 12, window.getSize().y / 12);
+
 	passport.getSprite()->setTexture(passports[passport_index], true);
 	passport.getSprite()->setScale(0.6, 0.6);
 	passport.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 3);
@@ -158,6 +236,27 @@ bool Game::ui(sf::Vector2i click, sf::Text icon)
 		return true;
 	}
 	return false;
+}
+
+bool Game::dropbox_collision()
+{
+	if (
+		passport.getSprite()->getPosition().x >
+		drop_box.getPosition().x &&
+		passport.getSprite()->getPosition().x <
+		drop_box.getPosition().x +
+		drop_box.getGlobalBounds().width &&
+		passport.getSprite()->getPosition().y >
+		drop_box.getPosition().y &&
+		passport.getSprite()->getPosition().y <
+		drop_box.getPosition().y +
+		drop_box.getGlobalBounds().height)
+	{
+		return true;
+	}
+
+	return false;
+
 }
 
 void Game::dragSprite(sf::Sprite* sprite)
