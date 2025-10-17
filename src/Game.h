@@ -60,11 +60,11 @@ class Game
 
 
   GameObject character;
-  sf::Texture* animals = new sf::Texture[3];
+  sf::Texture* animals = new sf::Texture[5];
   
 
   GameObject passport;
-  sf::Texture* passports = new sf::Texture[3];
+  sf::Texture* passports = new sf::Texture[5];
   sf::Texture passport_texture;
   
   GameObject background;

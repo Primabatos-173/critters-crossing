@@ -68,6 +68,16 @@ bool Game::init()
 	{
 		std::cout << "animal 3 did not load\n";
 	}
+
+	if (!animals[3].loadFromFile("../Data/WhackaMole Worksheet/ball.png"))
+	{
+		std::cout << "animal 4 did not load\n";
+	}
+
+	if (!animals[4].loadFromFile("../Data/WhackaMole Worksheet/bird.png"))
+	{
+		std::cout << "animal 5 did not load\n";
+	}
 	
 	//initalising passports
 	if (!passports[0].loadFromFile("../Data/Images/Critter Crossing Customs/moose passport.png"))
@@ -79,9 +89,20 @@ bool Game::init()
 	{
 		std::cout << "passport 2 did not load\n";
 	}
+
 	if (!passports[2].loadFromFile("../Data/Images/Critter Crossing Customs/elephant passport.png"))
 	{
 		std::cout << "passport 3 did not load\n";
+	}
+
+	if (!passports[3].loadFromFile("../Data/Images/Critter Crossing Customs/ball passport.png"))
+	{
+		std::cout << "passport 4 did not load\n";
+	}
+
+	if (!passports[4].loadFromFile("../Data/Images/Critter Crossing Customs/red passport.png"))
+	{
+		std::cout << "passport 5 did not load\n";
 	}
 	
 	background.initialiseSprite(background_texture, "../Data/WhackaMole Worksheet/background.png");
@@ -312,8 +333,8 @@ void Game::newAnimal()
 	bool passport_rejected = false;
 
 
-	int animal_index = rand() % 3;
-	int passport_index = rand() % 3;
+	int animal_index = rand() % 5;
+	int passport_index = rand() % 5;
 	
 
 	if (passport_index == animal_index)
