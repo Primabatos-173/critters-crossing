@@ -17,6 +17,37 @@ Game::~Game()
 
 bool Game::init()
 {
+	title.setString("Critters Crossing");
+	title.setFont(font);
+	title.setCharacterSize(80);
+	title.setFillColor(sf::Color::White);
+	title.setPosition(220, 90);
+
+	play_option.setString("Start");
+	play_option.setFont(font);
+	play_option.setCharacterSize(60);
+	play_option.setFillColor(sf::Color::Green);
+	play_option.setPosition(460, 300);
+
+	exit_option.setString("Exit");
+    exit_option.setFont(font);
+	exit_option.setCharacterSize(60);
+	exit_option.setFillColor(sf::Color::Red);
+	exit_option.setPosition(460, 400);
+
+	win_text.setString("        You got promoted!\n for being good at your job!");
+	win_text.setFont(font);
+	win_text.setCharacterSize(60);
+	win_text.setFillColor(sf::Color::White);
+	win_text.setPosition(150, 90);
+
+	loose_text.setString("          You're fired!\n for sucking at your job!");
+	loose_text.setFont(font);
+	loose_text.setCharacterSize(60);
+	loose_text.setFillColor(sf::Color::White);
+	loose_text.setPosition(200, 90);
+
+
 	if (!font.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf"))
 	{
 		std::cout << "font did not load\n";
@@ -132,12 +163,43 @@ void Game::update(float dt)
 		correct_num.setString(std::to_string(correct_score));
 		wrong_num.setString(std::to_string(wrong_score));
 		
+		if (correct_score == 10)
+		{
+			in_game = false;
+			win = true;
+			respawn();
+		}
+
+		if (wrong_score == 10)
+		{
+			in_game = false;
+			loose = true;
+			respawn();
+		}
+
+
 	}
 
 }
 
 void Game::render()
 {
+	if (win == true)
+	{
+		window.draw(win_text);
+	}
+	else if (loose == true)
+	{
+		window.draw(loose_text);
+	}
+	else
+	{
+		window.draw(title);
+	}
+	window.draw(play_option);
+	window.draw(exit_option);
+
+
 	if (in_game) 
 	{
 		window.draw(*background.getSprite());
@@ -171,6 +233,19 @@ void Game::mouseClicked(sf::Event event)
 	//get the click position
 	sf::Vector2i click = sf::Mouse::getPosition(window);
 	sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
+
+	if (ui(click, play_option))
+	{
+		in_game = true;
+		win = false;
+		loose = false;
+	}
+
+	if (ui(click, exit_option))
+	{
+		window.close();
+	}
+
 
 	if (passport.getSprite()->getGlobalBounds().contains(clickf))
 	{
@@ -208,7 +283,7 @@ void Game::mouseReleased(sf::Event event)
 		{
 			correct_score = correct_score + 1;
 		}
-		if (should_accept == false && reject_stamped)
+		if (!should_accept && reject_stamped)
 		{
 			correct_score = correct_score + 1;
 		}
@@ -216,13 +291,13 @@ void Game::mouseReleased(sf::Event event)
 		{
 			wrong_score = wrong_score + 1;
 		}
-		if (should_accept == false && accept_stamped)
+		if (!should_accept && accept_stamped)
 		{
 			wrong_score = wrong_score + 1;
 		}
 		accept_stamped = false;
 		reject_stamped = false;
-		std::cout << correct_score << "\n";
+		//std::cout << correct_score << "\n";
 	}
 }
 
@@ -274,6 +349,18 @@ bool Game::ui(sf::Vector2i click, sf::Text icon)
 	}
 	return false;
 }
+
+void Game::respawn()
+{
+	correct_score = 0;
+	wrong_score = 0;
+	correct_num.setString("0");
+	wrong_num.setString("0");
+	newAnimal();
+}
+
+
+
 
 bool Game::dropbox_collision()
 {

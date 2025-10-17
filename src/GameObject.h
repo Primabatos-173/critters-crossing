@@ -12,7 +12,6 @@ public:
 	~GameObject();
 
 	bool initialiseSprite(sf::Texture& texture, std::string filename);
-	bool intialiseRandSprite(sf::Texture& texture, std::string filename);
 	sf::Sprite* getSprite();
 
 	sf::Sprite* sprite = nullptr;

@@ -25,13 +25,15 @@ class Game
   bool ui(sf::Vector2i click, sf::Text icon);
   bool dropbox_collision();
   void newAnimal();
-  
+  void respawn();
   
   bool should_accept = false;
   bool change = true;
   bool accept_stamped = false;
   bool reject_stamped = false;
-  bool in_game = true;
+  bool in_game = false;
+  bool win = false;
+  bool loose = false;
 
   int correct_score = 0;
   int wrong_score = 0;
@@ -41,16 +43,21 @@ class Game
   sf::RenderWindow& window;
   sf::Font font;
 
-  sf::RectangleShape drop_box;
-  sf::Sprite ball;
-  sf::Texture ball_texture;
   sf::Text title;
   sf::Text play_option;
   sf::Text exit_option;
+
+  sf::RectangleShape drop_box;
+  sf::Sprite ball;
+  sf::Texture ball_texture;
+
   sf::Text correct;
   sf::Text correct_num;
   sf::Text wrong;
   sf::Text wrong_num;
+  sf::Text win_text;
+  sf::Text loose_text;
+
 
   GameObject character;
   sf::Texture* animals = new sf::Texture[3];
