@@ -126,19 +126,19 @@ bool Game::init()
 	drop_box.setFillColor(sf::Color::Blue);
 	drop_box.setPosition(70, 270);
 
-	correct.setString("correct:");
+	correct.setString("correct:     /10");
 	correct.setFont(font);
 	correct.setCharacterSize(30);
 	correct.setFillColor(sf::Color::Black);
-	correct.setPosition(600, 40);
+	correct.setPosition(550, 40);
 
 	correct_num.setString("0");
 	correct_num.setFont(font);
 	correct_num.setCharacterSize(30);
 	correct_num.setFillColor(sf::Color::Black);
-	correct_num.setPosition(730, 40);
+	correct_num.setPosition(680, 40);
 
-	wrong.setString("wrong:");
+	wrong.setString("wrong:     /5");
 	wrong.setFont(font);
 	wrong.setCharacterSize(30);
 	wrong.setFillColor(sf::Color::Black);
@@ -147,8 +147,8 @@ bool Game::init()
 	wrong_num.setString("0");
 	wrong_num.setFont(font);
 	wrong_num.setCharacterSize(30);
-	wrong_num.setFillColor(sf::Color::Black);
-	wrong_num.setPosition(930, 40);
+	wrong_num.setFillColor(sf::Color::Red);
+	wrong_num.setPosition(920, 40);
 
 
   return true;
@@ -191,7 +191,7 @@ void Game::update(float dt)
 			respawn();
 		}
 
-		if (wrong_score == 10)
+		if (wrong_score == 5)
 		{
 			in_game = false;
 			loose = true;
@@ -272,7 +272,7 @@ void Game::mouseClicked(sf::Event event)
 	{
 		dragged = passport.getSprite();
 
-		//std::cout << "clicked\n";
+		
 	}
 
 	if (mouseDetection(click, *acceptbutton.getSprite()))
@@ -346,7 +346,7 @@ void Game::newAnimal()
 		should_accept = false;
 	}
 	character.getSprite()->setTexture(animals[animal_index], true);
-	character.getSprite()->setScale(1, 1);
+	character.getSprite()->setScale(0.8, 0.8);
 	character.getSprite()->setPosition(window.getSize().x / 12, window.getSize().y / 12);
 
 	passport.getSprite()->setTexture(passports[passport_index], true);
