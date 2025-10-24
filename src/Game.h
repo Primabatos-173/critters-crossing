@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameObject.h"
+#include <vector>
 
 class Game
 {
@@ -60,11 +61,15 @@ class Game
 
 
   GameObject character;
-  sf::Texture* animals = new sf::Texture[5];
-  
+  using animalvector = std::vector <sf::Texture>;
+  animalvector animals;
+  //sf::Texture* animals = new sf::Texture[5];
+ 
 
   GameObject passport;
-  sf::Texture* passports = new sf::Texture[5];
+  using passportvector = std::vector <sf::Texture>;
+  passportvector passports;
+  //sf::Texture* passports = new sf::Texture[5];
   sf::Texture passport_texture;
   
   GameObject background;

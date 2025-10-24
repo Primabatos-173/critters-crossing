@@ -10,8 +10,9 @@ Game::Game(sf::RenderWindow& game_window)
 
 Game::~Game()
 {
-	delete[] animals;
-	delete[] passports;
+	animals.clear();
+	passports.clear();
+
 	
 }
 
@@ -53,59 +54,70 @@ bool Game::init()
 		std::cout << "font did not load\n";
 	}
 
+	animals.reserve(5);
+
+
 	//initalising animal sprites
+	animals.emplace_back();
 	if (!animals[0].loadFromFile("../Data/Images/Critter Crossing Customs/moose.png"))
 	{
 		std::cout << "animal 1 did not load\n";
 	}
-	
+	animals.emplace_back();
 	if (!animals[1].loadFromFile("../Data/Images/Critter Crossing Customs/penguin.png"))
 	{
 		std::cout << "animal 2 did not load\n";
 	}
-
+	animals.emplace_back();
 	if (!animals[2].loadFromFile("../Data/Images/Critter Crossing Customs/elephant.png"))
 	{
 		std::cout << "animal 3 did not load\n";
 	}
-
+	animals.emplace_back();
 	if (!animals[3].loadFromFile("../Data/WhackaMole Worksheet/ball.png"))
 	{
 		std::cout << "animal 4 did not load\n";
 	}
-
+	animals.emplace_back();
 	if (!animals[4].loadFromFile("../Data/WhackaMole Worksheet/bird.png"))
 	{
 		std::cout << "animal 5 did not load\n";
 	}
+
+	passports.reserve(5);
 	
 	//initalising passports
+	passports.emplace_back();
 	if (!passports[0].loadFromFile("../Data/Images/Critter Crossing Customs/moose passport.png"))
 	{
 		std::cout << "passport 1 did not load\n";
 	}
 
+	passports.emplace_back();
 	if (!passports[1].loadFromFile("../Data/Images/Critter Crossing Customs/penguin passport.png"))
 	{
 		std::cout << "passport 2 did not load\n";
 	}
 
+	passports.emplace_back();
 	if (!passports[2].loadFromFile("../Data/Images/Critter Crossing Customs/elephant passport.png"))
 	{
 		std::cout << "passport 3 did not load\n";
 	}
 
+	passports.emplace_back();
 	if (!passports[3].loadFromFile("../Data/Images/Critter Crossing Customs/ball passport.png"))
 	{
 		std::cout << "passport 4 did not load\n";
 	}
 
+	passports.emplace_back();
 	if (!passports[4].loadFromFile("../Data/Images/Critter Crossing Customs/red passport.png"))
 	{
 		std::cout << "passport 5 did not load\n";
 	}
 	
-	background.initialiseSprite(background_texture, "../Data/WhackaMole Worksheet/background.png");
+	background.initialiseSprite(background_texture, "../Data/Images/Critter Crossing Customs/background.png");
 
 	acceptbutton.initialiseSprite(acceptbutton_texture, "../Data/Images/Critter Crossing Customs/accept button.png");
 	acceptbutton.getSprite()->setScale(0.8, 0.8);
@@ -122,9 +134,9 @@ bool Game::init()
 	reject.getSprite()->setScale(0.8, 0.8);
 
 	//initalising drop box
-	drop_box.setSize(sf::Vector2f(450, 500));
-	drop_box.setFillColor(sf::Color::Blue);
-	drop_box.setPosition(70, 270);
+	drop_box.setSize(sf::Vector2f(450, 450));
+	drop_box.setFillColor(sf::Color (202, 202, 202));
+	drop_box.setPosition(50, 300);
 
 	correct.setString("correct:     /10");
 	correct.setFont(font);
@@ -351,7 +363,7 @@ void Game::newAnimal()
 
 	passport.getSprite()->setTexture(passports[passport_index], true);
 	passport.getSprite()->setScale(0.6, 0.6);
-	passport.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 3);
+	passport.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 2.5);
 	change = false;
 	
 }
