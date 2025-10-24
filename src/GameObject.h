@@ -12,9 +12,10 @@ public:
 	~GameObject();
 
 	bool initialiseSprite(sf::Texture& texture, std::string filename);
-	sf::Sprite* getSprite();
+	std::shared_ptr<sf::Sprite> getSprite();
 
-	sf::Sprite* sprite = nullptr;
+	std::shared_ptr<sf::Sprite> sprite = nullptr;
+	//sf::Sprite* sprite = nullptr;
 };
 
 #endif // GAMEOBJECT_H

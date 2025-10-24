@@ -2,16 +2,12 @@
 
 GameObject::GameObject()
 {
-    sprite = new sf::Sprite();
+    sprite = std::make_unique<sf::Sprite>();
 }
 
 GameObject::~GameObject()
 {
-    if (sprite != nullptr)
-    {
-        delete sprite;
-        sprite = nullptr;
-    }
+
 }
 
 bool GameObject::initialiseSprite(sf::Texture& texture, std::string filename)
@@ -25,7 +21,7 @@ bool GameObject::initialiseSprite(sf::Texture& texture, std::string filename)
     return true;
 }
 
-sf::Sprite* GameObject::getSprite()
+std::shared_ptr<sf::Sprite> GameObject::getSprite()
 {
     return sprite;
 }

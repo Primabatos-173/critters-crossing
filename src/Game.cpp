@@ -267,17 +267,23 @@ void Game::mouseClicked(sf::Event event)
 	sf::Vector2i click = sf::Mouse::getPosition(window);
 	sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
-	if (ui(click, play_option))
+	if (!in_game) 
 	{
-		in_game = true;
-		win = false;
-		loose = false;
-	}
+		if (ui(click, exit_option))
+		{
+			window.close();
+		}
 
-	if (ui(click, exit_option))
-	{
-		window.close();
+		if (ui(click, play_option))
+		{
+			in_game = true;
+			win = false;
+			loose = false;
+		}
 	}
+	
+
+	
 
 
 	if (passport.getSprite()->getGlobalBounds().contains(clickf))
@@ -416,7 +422,7 @@ bool Game::dropbox_collision()
 
 }
 
-void Game::dragSprite(sf::Sprite* sprite)
+void Game::dragSprite(std::shared_ptr<sf::Sprite> sprite)
 {
 	if (sprite != nullptr)
 	{

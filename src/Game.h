@@ -17,7 +17,7 @@ class Game
   void mouseClicked(sf::Event event);
   void mouseReleased(sf::Event event);
   void keyPressed(sf::Event event);
-  void dragSprite(sf::Sprite* sprite);
+  void dragSprite(std::shared_ptr<sf::Sprite> sprite);
   bool mouseDetection(sf::Vector2i click, sf::Sprite sprite);
   
 
@@ -39,7 +39,7 @@ class Game
   int correct_score = 0;
   int wrong_score = 0;
 
-  sf::Sprite* dragged = nullptr;
+std::shared_ptr<sf::Sprite> dragged = nullptr;
 
   sf::RenderWindow& window;
   sf::Font font;
@@ -70,7 +70,7 @@ class Game
   using passportvector = std::vector <sf::Texture>;
   passportvector passports;
   //sf::Texture* passports = new sf::Texture[5];
-  sf::Texture passport_texture;
+  
   
   GameObject background;
   sf::Texture background_texture;
