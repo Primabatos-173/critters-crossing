@@ -35,6 +35,7 @@ class Game
   bool in_game = false;
   bool win = false;
   bool loose = false;
+  bool pause = false;
 
   int correct_score = 0;
   int wrong_score = 0;
@@ -52,12 +53,16 @@ std::shared_ptr<sf::Sprite> dragged = nullptr;
   sf::Sprite ball;
   sf::Texture ball_texture;
 
+  sf::Text pause_button;
+  sf::Text pause_continue;
+  sf::Text pause_exit;
   sf::Text correct;
   sf::Text correct_num;
   sf::Text wrong;
   sf::Text wrong_num;
   sf::Text win_text;
   sf::Text loose_text;
+  sf::RectangleShape pause_background;
 
 
   GameObject character;

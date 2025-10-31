@@ -137,6 +137,7 @@ bool Game::init()
 	drop_box.setSize(sf::Vector2f(450, 450));
 	drop_box.setFillColor(sf::Color (202, 202, 202));
 	drop_box.setPosition(50, 300);
+	
 
 	correct.setString("correct:     /10");
 	correct.setFont(font);
@@ -162,13 +163,33 @@ bool Game::init()
 	wrong_num.setFillColor(sf::Color::Red);
 	wrong_num.setPosition(920, 40);
 
+	pause_button.setString("ll");
+	pause_button.setFont(font);
+	pause_button.setCharacterSize(50);
+	pause_button.setFillColor(sf::Color::Black);
+	pause_button.setPosition(1030, 30);
+
+	pause_background.setSize(sf::Vector2f(1080, 720));
+	pause_background.setFillColor(sf::Color(255, 255, 255, 128));
+
+	pause_continue.setString("continue");
+	pause_continue.setFont(font);
+	pause_continue.setCharacterSize(60);
+	pause_continue.setFillColor(sf::Color::Black);
+	pause_continue.setPosition(400, 300);
+
+	pause_exit.setString("quit");
+	pause_exit.setFont(font);
+	pause_exit.setCharacterSize(60);
+	pause_exit.setFillColor(sf::Color::Black);
+	pause_exit.setPosition(460, 400);
 
   return true;
 }
 
 void Game::update(float dt)
 {
-	if (in_game) 
+	if (in_game && !pause) 
 	{
 		if (change == true)
 		{
@@ -256,8 +277,18 @@ void Game::render()
 		window.draw(correct_num);
 		window.draw(wrong);
 		window.draw(wrong_num);
+		window.draw(pause_button);
+
+		if (pause)
+		{
+			window.draw(pause_background);
+			window.draw(pause_continue);
+			window.draw(pause_exit);
+		}
 
 	}
+
+
 
 }
 
@@ -282,28 +313,49 @@ void Game::mouseClicked(sf::Event event)
 		}
 	}
 	
-
-	
-
-
-	if (passport.getSprite()->getGlobalBounds().contains(clickf))
+	if (in_game)
 	{
+		if (passport.getSprite()->getGlobalBounds().contains(clickf))
+	    {
 		dragged = passport.getSprite();
 
 		
-	}
+	    }
 
-	if (mouseDetection(click, *acceptbutton.getSprite()))
-	{
+	    if (mouseDetection(click, *acceptbutton.getSprite()) && !pause)
+	    {
 		accept_stamped = true;
 		reject_stamped = false;
-	}
+	    } 
 
-	if (mouseDetection(click, *rejectbutton.getSprite()))
-	{
+	   if (mouseDetection(click, *rejectbutton.getSprite()) && !pause)
+	   {
 		reject_stamped = true;
 		accept_stamped = false;
+	   }
+
+
 	}
+
+	if (ui(click, pause_button))
+	{
+		pause = true;
+	}
+
+	if (ui(click, pause_continue))
+	{
+		pause = false;
+	}
+
+	if (ui(click, pause_exit))
+	{
+		in_game = false;
+		win = false;
+		loose = false;
+		respawn();
+	}
+
+	
 	
 	
 
@@ -391,6 +443,7 @@ bool Game::ui(sf::Vector2i click, sf::Text icon)
 
 void Game::respawn()
 {
+	pause = false;
 	correct_score = 0;
 	wrong_score = 0;
 	correct_num.setString("0");

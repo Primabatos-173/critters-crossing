@@ -5,10 +5,7 @@ GameObject::GameObject()
     sprite = std::make_unique<sf::Sprite>();
 }
 
-GameObject::~GameObject()
-{
 
-}
 
 bool GameObject::initialiseSprite(sf::Texture& texture, std::string filename)
 {

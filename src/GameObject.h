@@ -9,7 +9,7 @@ class GameObject
 {
 public:
 	GameObject();
-	~GameObject();
+	
 
 	bool initialiseSprite(sf::Texture& texture, std::string filename);
 	std::shared_ptr<sf::Sprite> getSprite();
