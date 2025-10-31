@@ -347,7 +347,7 @@ void Game::mouseClicked(sf::Event event)
 		pause = false;
 	}
 
-	if (ui(click, pause_exit))
+	if (ui(click, pause_exit) && pause)
 	{
 		in_game = false;
 		win = false;
