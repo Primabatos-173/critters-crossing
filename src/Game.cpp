@@ -479,10 +479,11 @@ void Game::dragSprite(std::shared_ptr<sf::Sprite> sprite)
 {
 	if (sprite != nullptr)
 	{
+		sf::Vector2f dragOffset(sf::Vector2f(sprite->getGlobalBounds().getSize().x / 2, sprite->getGlobalBounds().getSize().y / 2));
 		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
 		sf::Vector2f mouse_positionf = static_cast<sf::Vector2f>(mouse_position);
 
-		sf::Vector2f drag_position = mouse_positionf;
+		sf::Vector2f drag_position = mouse_positionf - dragOffset;
 		sprite->setPosition(drag_position.x, drag_position.y);
 	}
 }
