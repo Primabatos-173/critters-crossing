@@ -117,8 +117,10 @@ bool Game::init()
 		std::cout << "passport 5 did not load\n";
 	}
 	
+	// initalising background
 	background.initialiseSprite(background_texture, "../Data/Images/Critter Crossing Customs/background.png");
 
+	//initalising accept and rejct buttons
 	acceptbutton.initialiseSprite(acceptbutton_texture, "../Data/Images/Critter Crossing Customs/accept button.png");
 	acceptbutton.getSprite()->setScale(0.8, 0.8);
 	acceptbutton.getSprite()->setPosition(window.getSize().x / 2, window.getSize().y / 4.8);
@@ -138,7 +140,7 @@ bool Game::init()
 	drop_box.setFillColor(sf::Color (202, 202, 202));
 	drop_box.setPosition(50, 300);
 	
-
+	//initalsing texts
 	correct.setString("correct:     /10");
 	correct.setFont(font);
 	correct.setCharacterSize(30);
@@ -191,6 +193,7 @@ void Game::update(float dt)
 {
 	if (in_game && !pause) 
 	{
+		// setting up conditions and calling out functions
 		if (change == true)
 		{
 			newAnimal();
@@ -200,6 +203,7 @@ void Game::update(float dt)
 			dragSprite(passport.getSprite());
 		}
 
+		// accept and reject stamps stick to the passport if variables are true
 		if (accept_stamped)
 		{
 			accept.getSprite()->setPosition(passport.getSprite()->getPosition().x, passport.getSprite()->getPosition().y);
@@ -210,6 +214,7 @@ void Game::update(float dt)
 			reject.getSprite()->setPosition(passport.getSprite()->getPosition().x, passport.getSprite()->getPosition().y);
 		}
 
+		// calling out the newanimal function if conditions are met
 		if (change == true)
 		{
 			newAnimal();
@@ -217,6 +222,7 @@ void Game::update(float dt)
 		correct_num.setString(std::to_string(correct_score));
 		wrong_num.setString(std::to_string(wrong_score));
 		
+		// win condition
 		if (correct_score == 10)
 		{
 			in_game = false;
@@ -224,6 +230,7 @@ void Game::update(float dt)
 			respawn();
 		}
 
+		// lose condition
 		if (wrong_score == 5)
 		{
 			in_game = false;
@@ -300,6 +307,7 @@ void Game::mouseClicked(sf::Event event)
 
 	if (!in_game) 
 	{
+		// click functions in the main menu
 		if (ui(click, exit_option))
 		{
 			window.close();
@@ -315,6 +323,7 @@ void Game::mouseClicked(sf::Event event)
 	
 	if (in_game)
 	{
+		// detecting whether if the mouse clicked on the passport
 		if (passport.getSprite()->getGlobalBounds().contains(clickf))
 	    {
 		dragged = passport.getSprite();
@@ -322,6 +331,7 @@ void Game::mouseClicked(sf::Event event)
 		
 	    }
 
+		// accept and reject button functions
 	    if (mouseDetection(click, *acceptbutton.getSprite()) && !pause)
 	    {
 		accept_stamped = true;
@@ -337,6 +347,7 @@ void Game::mouseClicked(sf::Event event)
 
 	}
 
+	// functions for the pause screen
 	if (ui(click, pause_button))
 	{
 		pause = true;
@@ -363,6 +374,8 @@ void Game::mouseClicked(sf::Event event)
 
 void Game::mouseReleased(sf::Event event)
 {
+	// make the passports stop sticking to mouse when released
+	// functions for adding scores
 	dragged = nullptr;
 	if (dropbox_collision() && (accept_stamped || reject_stamped))
 	{
@@ -399,6 +412,8 @@ void Game::keyPressed(sf::Event event)
 
 void Game::newAnimal()
 {
+	// function for generating a new animal and passport
+	// checking if the animal and passport are matched
 	bool passport_accept = false;
 	bool passport_rejected = false;
 
@@ -443,6 +458,7 @@ bool Game::ui(sf::Vector2i click, sf::Text icon)
 
 void Game::respawn()
 {
+	// function for restarting the game
 	pause = false;
 	correct_score = 0;
 	wrong_score = 0;
@@ -456,6 +472,8 @@ void Game::respawn()
 
 bool Game::dropbox_collision()
 {
+	// function for the drop box
+	// checks whether if the passports are droped in the box
 	if (
 		passport.getSprite()->getPosition().x >
 		drop_box.getPosition().x &&
@@ -477,6 +495,7 @@ bool Game::dropbox_collision()
 
 void Game::dragSprite(std::shared_ptr<sf::Sprite> sprite)
 {
+	// function for making the passport move along with the mouse
 	if (sprite != nullptr)
 	{
 		sf::Vector2f dragOffset(sf::Vector2f(sprite->getGlobalBounds().getSize().x / 2, sprite->getGlobalBounds().getSize().y / 2));
